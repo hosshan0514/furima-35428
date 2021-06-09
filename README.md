@@ -20,17 +20,17 @@
 
 ## items テーブル
 
-| Column            | Type        | Options     |
-| ----------------- | ----------- | ----------- |
-| name              | string      | null: false |
-| information       | text        | null: false |
-| category_id       | integer     | null: false |
-| state_id          | integer     | null: false |
-| postage_id        | integer     | null: false |
-| region_id         | integer     | null: false |
-| shipping_date_id  | integer     | null: false |
-| price             | integer     | null: false |
-| user              | references  | null: false |
+| Column            | Type        | Options                         |
+| ----------------- | ----------- | ----------- | ----------------- |
+| name              | string      | null: false |                   |
+| information       | text        | null: false |                   |
+| category_id       | integer     | null: false |                   |
+| state_id          | integer     | null: false |                   |
+| postage_id        | integer     | null: false |                   |
+| region_id         | integer     | null: false |                   |
+| shipping_date_id  | integer     | null: false |                   |
+| price             | integer     | null: false |                   |
+| user              | references  | null: false | foreign_key: true |
 
 ### Association
 
@@ -39,10 +39,10 @@
 
 ## purchase テーブル
 
-| Column             | Type        | Options     |
-| ------------------ | ----------- | ----------- |
-| user               | references  | null: false |
-| item               | references  | null: false |
+| Column             | Type        | Options                         |
+| ------------------ | ----------- | ----------- | ----------------- |
+| user               | references  | null: false | foreign_key: true |
+| item               | references  | null: false | foreign_key: true |
 
 ### Association
 
@@ -52,14 +52,15 @@
 
 ## orders テーブル
 
-| Column             | Type    | Options     |
-| ------------------ | --------| ----------- |
-| postal_code        | string  | null: false |
-| state_id           | integer | null: false |
-| city_id            | string  | null: false |
-| street_address_id  | string  | null: false |
-| suburb_id          | string  |             |
-| phone_number       | string  | null: false |
+| Column             | Type       | Options                         |
+| ------------------ | ---------- | ----------- | ----------------- |
+| postal_code        | string     | null: false |                   |
+| state_id           | integer    | null: false |                   |
+| city               | string     | null: false |                   |
+| street_address     | string     | null: false |                   |
+| suburb             | string     |             |                   |
+| phone_number       | string     | null: false |                   |
+| purchase           | references | null: false | foreign_key: true |
 
 ### Association
 
