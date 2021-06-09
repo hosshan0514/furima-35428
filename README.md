@@ -2,60 +2,65 @@
 
 ## users テーブル
 
-| Column          | Type   | Options     |
-| ----------------| ------ | ----------- |
-| nickname        | string | null: false |
-| email           | string | null: false |
-| password        | string | null: false |
-| last_name       | string | null: false |
-| first_name      | string | null: false |
-| last_name_kana  | string | null: false |
-| first_name_kana | string | null: false |
-| birthday        | date   | null: false |
+| Column             | Type   | Options      |
+| -------------------| ------ | ------------ |
+| nickname           | string | null: false  |
+| email              | string | unique: true |
+| encrypted_password | string | null: false  |
+| last_name          | string | null: false  | 
+| first_name         | string | null: false  |
+| last_name_kana     | string | null: false  |
+| first_name_kana    | string | null: false  |
+| birthday           | date   | null: false  |
 
 ### Association
 
 - has_many :items
-- has_many :orders
+- has_many :purchases
 
 ## items テーブル
 
-| Column         | Type        | Options     |
-| -------------- | ----------- | ----------- |
-| image          | text        | null: false |
-| name           | string      | null: false |
-| information    | text        | null: false |
-| category       | string      | null: false |
-| state          | string      | null: false |
-| postage        | string      | null: false |
-| region         | string      | null: false |
-| shipping_date  | string      | null: false |
-| price          | string      | null: false |
-| user           | references  | null: false |
+| Column            | Type        | Options     |
+| ----------------- | ----------- | ----------- |
+| name              | string      | null: false |
+| information       | text        | null: false |
+| category_id       | integer     | null: false |
+| state_id          | integer     | null: false |
+| postage_id        | integer     | null: false |
+| region_id         | integer     | null: false |
+| shipping_date_id  | integer     | null: false |
+| price             | integer     | null: false |
+| user              | references  | null: false |
 
 ### Association
 
 - belongs_to :user
-- has_one :order
+- has_many :purchases
 
 ## orders テーブル
 
-| Column             | Type       | Options      |
-| ------------------ | ---------- | ------------ |
-| card_number        | string      | null: false |
-| card_expiry_month  | string      | null: false |
-| card_expiry_year   | string      | null: false |
-| card_cvc           | string      | null: false |
-| postal_code        | string      | null: false |
-| state              | string      | null: false |
-| city               | string      | null: false |
-| street_address     | string      | null: false |
-| suburb             | string      | null: false |
-| phone_number       | string      | null: false |
+| Column             | Type    | Options     |
+| ------------------ | --------| ----------- |
+| postal_code        | string  | null: false |
+| state_id           | integer | null: false |
+| city_id            | integer | null: false |
+| street_address_id  | integer | null: false |
+| suburb_id          | integer |             |
+| phone_number       | string  | null: false |
+
+### Association
+
+- belongs_to :user
+- belongs_to :item
+- has_one :order
+
+## purchase テーブル
+
+| Column             | Type        | Options     |
+| ------------------ | ----------- | ----------- |
 | user               | references  | null: false |
 | item               | references  | null: false |
 
 ### Association
 
-- belongs_to :user
 - belongs_to :order
