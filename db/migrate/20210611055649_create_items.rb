@@ -5,8 +5,8 @@ class CreateItems < ActiveRecord::Migration[6.0]
       t.text       :information
       t.integer    :category_id
       t.integer    :state_id
-      t.integer    :postage 
-      t.integer    :region  
+      t.integer    :postage_id 
+      t.integer    :region_id  
       t.integer    :shipping_date_id
       t.integer    :price 
       t.references :user, foreign_key: true
