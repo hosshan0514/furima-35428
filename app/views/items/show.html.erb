@@ -3,7 +3,7 @@
 <div class="item-show">
   <div class="item-box">
     <h2 class="name">
-      <%= item.name %>
+      <%= @item.name %>
     </h2>
     <div class="item-img-content">
       <%= image_tag "item-sample.png" ,class:"item-box-img" %>
@@ -22,8 +22,8 @@
       </span>
     </div>
 
-    <% if user_sign_in? && @items.presence? %>
-      <% if current_user.id == @items.user.id %>
+    <% if user_signed_in?  %> 
+      <% if current_user.id == @item.user.id %>
         <%= link_to "商品の編集", "#", method: :get, class: "item-red-btn" %>
         <p class="or-text">or</p>
         <%= link_to "削除", "#", method: :delete, class:"item-destroy" %>
