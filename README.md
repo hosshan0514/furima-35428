@@ -55,7 +55,7 @@
 | Column             | Type       | Options                         |
 | ------------------ | ---------- | ----------- | ----------------- |
 | postal_code        | string     | null: false |                   |
-| state_id           | integer    | null: false |                   |
+| region_id           | integer    | null: false |                   |
 | city               | string     | null: false |                   |
 | street_address     | string     | null: false |                   |
 | suburb             | string     |             |                   |

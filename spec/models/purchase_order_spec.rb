@@ -10,9 +10,6 @@ RSpec.describe PurchaseOrder, type: :model do
     end
 
     context '内容に問題がない場合' do
-      it 'tokenがあれば保存できる' do
-        expect(@purchase_order).to be_valid
-      end
       it '全ての値が正しく入力されていれば保存できる' do
         expect(@purchase_order).to be_valid
       end
@@ -34,12 +31,12 @@ RSpec.describe PurchaseOrder, type: :model do
         expect(@purchase_order.errors.full_messages).to include("Postal code can't be blank")
       end
       it '郵便番号が半角のハイフンを含んだ正しい形式でない空合、保存ができない' do
-        @purchase_order.postal_code = 1_234_567
+        @purchase_order.postal_code = '1234567'
         @purchase_order.valid?
         expect(@purchase_order.errors.full_messages).to include('Postal code is invalid. Include hyphen(-)')
       end
       it '都道府県が空の場合、保存ができない' do
-        @purchase_order.state_id = ''
+        @purchase_order.region_id = ''
         @purchase_order.valid?
         expect(@purchase_order.errors.full_messages).to include("State can't be blank")
       end
