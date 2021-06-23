@@ -38,7 +38,12 @@ RSpec.describe PurchaseOrder, type: :model do
       it '都道府県が空の場合、保存ができない' do
         @purchase_order.region_id = ''
         @purchase_order.valid?
-        expect(@purchase_order.errors.full_messages).to include("State can't be blank")
+        expect(@purchase_order.errors.full_messages).to include("Region can't be blank")
+      end
+      it 'region_idが1の場合、保存ができない' do
+        @purchase_order.region_id = '1'
+        @purchase_order.valid?
+        expect(@purchase_order.errors.full_messages).to include('Region must be other than 1')
       end
       it '市区町村が空の場合、保存ができない' do
         @purchase_order.city = ''
@@ -57,6 +62,11 @@ RSpec.describe PurchaseOrder, type: :model do
       end
       it '電話番号が12桁以上の場合、保存ができない' do
         @purchase_order.phone_number = '090123456789'
+        @purchase_order.valid?
+        expect(@purchase_order.errors.full_messages).to include('Phone number is invalid')
+      end
+      it '電話番号が半角英数字混合の場合、保存ができない' do
+        @purchase_order.phone_number = '11111aaaaaa'
         @purchase_order.valid?
         expect(@purchase_order.errors.full_messages).to include('Phone number is invalid')
       end
