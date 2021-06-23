@@ -10,6 +10,9 @@ RSpec.describe PurchaseOrder, type: :model do
     end
 
     context '内容に問題がない場合' do
+      it 'tokenがあれば保存できる' do
+        expect(@purchase_order).to be_valid
+      end
       it '全ての値が正しく入力されていれば保存できる' do
         expect(@purchase_order).to be_valid
       end
@@ -20,6 +23,11 @@ RSpec.describe PurchaseOrder, type: :model do
     end
 
     context '内容に問題がある場合' do
+      it 'tokenが空の場合、保存されない' do
+        @purchase_order.token = ''
+        @purchase_order.valid?      
+        expect(@purchase_order.errors.full_messages).to include("Token can't be blank")
+      end
       it '郵便番号が空の場合、保存ができない' do
         @purchase_order.postal_code = ''
         @purchase_order.valid?
@@ -54,6 +62,16 @@ RSpec.describe PurchaseOrder, type: :model do
         @purchase_order.phone_number = '090123456789'
         @purchase_order.valid?
         expect(@purchase_order.errors.full_messages).to include("Phone number is invalid")
+      end
+      it 'userが紐付いていないと保存できないこと' do
+        @purchase_order.user_id = nil
+        @purchase_order.valid?
+        expect(@purchase_order.errors.full_messages).to include("User can't be blank")
+      end
+      it 'itemが紐付いていないと保存できないこと' do
+        @purchase_order.item_id = nil
+        @purchase_order.valid?
+        expect(@purchase_order.errors.full_messages).to include("Item can't be blank")
       end
     end
   end
