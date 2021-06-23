@@ -5,6 +5,7 @@ RSpec.describe PurchaseOrder, type: :model do
     before do
       user = FactoryBot.create(:user)
       item = FactoryBot.create(:item)
+      sleep 0.1 #FactoryBot.createが２つ以上ある場合に使用する。＊バグ防止のため
       @purchase_order = FactoryBot.build(:purchase_order, user_id: user.id, item_id: item.id)
     end
 
@@ -29,31 +30,31 @@ RSpec.describe PurchaseOrder, type: :model do
         @purchase_order.valid?
         expect(@purchase_order.errors.full_messages).to include("Postal code is invalid. Include hyphen(-)")
       end
-      # it '都道府県が空の場合、保存ができない' do
-      #   @purchase_order.state_id = ''
-      #   @purchase_order.valid?
-      #   binding.pry
-      # end
-      # it '市区町村が空の場合、保存ができない' do
-      #   @purchase_order.city = ''
-      #   @purchase_order.valid?
-      #   binding.pry
-      # end
-      # it '番地が空の場合、保存ができない' do
-      #   @purchase_order.street_address = ''
-      #   @purchase_order.valid?
-      #   binding.pry
-      # end
-      # it '電話番号が空の場合、保存ができない' do
-      #   @purchase_order.phone_number = ''
-      #   @purchase_order.valid?
-      #   binding.pry
-      # end
-      # it '電話番号が12桁以上の場合、保存ができない' do
-      #   @purchase_order.phone_number = '090123456789'
-      #   @purchase_order.valid?
-      #   binding.pry
-      # end
+      it '都道府県が空の場合、保存ができない' do
+        @purchase_order.state_id = ''
+        @purchase_order.valid?
+        expect(@purchase_order.errors.full_messages).to include("State can't be blank")
+      end
+      it '市区町村が空の場合、保存ができない' do
+        @purchase_order.city = ''
+        @purchase_order.valid?
+        expect(@purchase_order.errors.full_messages).to include("City can't be blank")
+      end
+      it '番地が空の場合、保存ができない' do
+        @purchase_order.street_address = ''
+        @purchase_order.valid?
+        expect(@purchase_order.errors.full_messages).to include("Street address can't be blank")
+      end
+      it '電話番号が空の場合、保存ができない' do
+        @purchase_order.phone_number = ''
+        @purchase_order.valid?
+        expect(@purchase_order.errors.full_messages).to include("Phone number can't be blank")
+      end
+      it '電話番号が12桁以上の場合、保存ができない' do
+        @purchase_order.phone_number = '090123456789'
+        @purchase_order.valid?
+        expect(@purchase_order.errors.full_messages).to include("Phone number is invalid")
+      end
     end
   end
 end
