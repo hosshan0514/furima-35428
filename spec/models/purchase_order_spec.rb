@@ -1,11 +1,11 @@
 require 'rails_helper'
 
 RSpec.describe PurchaseOrder, type: :model do
-  describe  '購入者情報の保存' do
+  describe '購入者情報の保存' do
     before do
       user = FactoryBot.create(:user)
       item = FactoryBot.create(:item)
-      sleep 0.1 #FactoryBot.createが２つ以上ある場合に使用する。＊バグ防止のため
+      sleep 0.1 # FactoryBot.createが２つ以上ある場合に使用する。＊バグ防止のため
       @purchase_order = FactoryBot.build(:purchase_order, user_id: user.id, item_id: item.id)
     end
 
@@ -25,7 +25,7 @@ RSpec.describe PurchaseOrder, type: :model do
     context '内容に問題がある場合' do
       it 'tokenが空の場合、保存されない' do
         @purchase_order.token = ''
-        @purchase_order.valid?      
+        @purchase_order.valid?
         expect(@purchase_order.errors.full_messages).to include("Token can't be blank")
       end
       it '郵便番号が空の場合、保存ができない' do
@@ -34,9 +34,9 @@ RSpec.describe PurchaseOrder, type: :model do
         expect(@purchase_order.errors.full_messages).to include("Postal code can't be blank")
       end
       it '郵便番号が半角のハイフンを含んだ正しい形式でない空合、保存ができない' do
-        @purchase_order.postal_code = 1234567
+        @purchase_order.postal_code = 1_234_567
         @purchase_order.valid?
-        expect(@purchase_order.errors.full_messages).to include("Postal code is invalid. Include hyphen(-)")
+        expect(@purchase_order.errors.full_messages).to include('Postal code is invalid. Include hyphen(-)')
       end
       it '都道府県が空の場合、保存ができない' do
         @purchase_order.state_id = ''
@@ -61,7 +61,7 @@ RSpec.describe PurchaseOrder, type: :model do
       it '電話番号が12桁以上の場合、保存ができない' do
         @purchase_order.phone_number = '090123456789'
         @purchase_order.valid?
-        expect(@purchase_order.errors.full_messages).to include("Phone number is invalid")
+        expect(@purchase_order.errors.full_messages).to include('Phone number is invalid')
       end
       it 'userが紐付いていないと保存できないこと' do
         @purchase_order.user_id = nil
