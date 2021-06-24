@@ -41,7 +41,7 @@ RSpec.describe PurchaseOrder, type: :model do
         expect(@purchase_order.errors.full_messages).to include("Region can't be blank")
       end
       it 'region_idが1の場合、保存ができない' do
-        @purchase_order.region_id = '1'
+        @purchase_order.region_id = 1
         @purchase_order.valid?
         expect(@purchase_order.errors.full_messages).to include('Region must be other than 1')
       end
